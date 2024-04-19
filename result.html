@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth and Progress Graph - Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #6075ee, #9cc0ddd2); /* Gradient background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #fff; /* White text color */
+            margin-bottom: 20px;
+        }
+
+        .graph-container {
+            background: #fff; /* White background for the graph container */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        .predicted-value {
+            color: #fff; /* White text color */
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .logout-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Growth and Progress Graph - Result</h1>
+
+    <div class="graph-container">
+        <canvas id="growthGraph"></canvas>
+    </div>
+
+    <p class="predicted-value">Predicted Value: {{ prediction }}</p>
+
+    <form class="logout-button" action="{{ url_for('logout') }}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <script>
+        // JavaScript code for creating the graph using Chart.js
+        const predictedValue = {{ prediction }}; // Replace with your actual predicted value
+        const ctx = document.getElementById('growthGraph').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Predicted Value'],
+                datasets: [{
+                    label: 'Growth and Progress',
+                    data: [predictedValue], // This will be the predicted value
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: predictedValue + 10 // Adjust the max value as needed
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
